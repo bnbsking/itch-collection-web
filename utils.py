@@ -15,7 +15,8 @@ diseaseD = {
     "Fungal-disease": "真菌感染疾病",
     "Psoriasis": "乾癬",
     "Urticaria": "蕁麻疹",
-    "Insect-Bites-or-Scables-or-Others": "蟲咬,疥瘡,其他"
+    "Insect-Bites-or-Scables": "蟲咬或疥瘡",
+    "Others": "其他"
 }
 
 def nav_page(page_name, timeout_secs=3):
