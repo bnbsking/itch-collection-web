@@ -6,6 +6,7 @@ id_chars = "".join(map(str,range(10))) + "".join( chr(ord('a')+i) for i in range
 
 def isLogin(cookie_manager):
     session_id = cookie_manager.get("session_id")
+    time.sleep(0.5)
     session = json.load(open("session.json","r"))
     return session_id in session
 
