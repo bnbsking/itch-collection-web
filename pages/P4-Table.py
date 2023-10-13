@@ -27,20 +27,22 @@ st.markdown(title, unsafe_allow_html=True)
 st.markdown(subtitle, unsafe_allow_html=True)
 
 # small password
-account_in, password_in, submit_btn, login = st.empty(), st.empty(), st.empty(), False
-account = account_in.text_input("Account", max_chars=100, value=cfg["account"] if cfg["autofill"] else "")
-password = password_in.text_input("Passward", max_chars=100, value=cfg["password"] if cfg["autofill"] else "", type="password")
-submit = submit_btn.button("Login")
-if submit:
-    if account==cfg["account"] and password==cfg["password"]:
-        login = True
-        account_in.empty()
-        password_in.empty()
-        submit_btn.empty()
-    else:
-        st.error(":red[Incorrect Account or Passward]")
-if not login:
-    sys.exit()
+if "login" not in st.session_state: # only F5-refresh can wipe out st.session_state 
+    account_in, password_in, submit_btn, login = st.empty(), st.empty(), st.empty(), False
+    account = account_in.text_input("Account", max_chars=100, value=cfg["account"] if cfg["autofill"] else "")
+    password = password_in.text_input("Passward", max_chars=100, value=cfg["password"] if cfg["autofill"] else "", type="password")
+    submit = submit_btn.button("Login")
+    if submit:
+        if account==cfg["account"] and password==cfg["password"]:
+            st.session_state["login"] = True
+            login = True
+            account_in.empty()
+            password_in.empty()
+            submit_btn.empty()
+        else:
+            st.error(":red[Incorrect Account or Passward]")
+    if not login:
+        sys.exit()
 
 # load table
 path = f"{data_path}/export_tab/data.csv"
@@ -103,6 +105,3 @@ for disease in utils.diseaseD:
 df_image = pd.DataFrame(imageD)
 df_image.rename(index={0:"Chinese", 1:"Counts"}, inplace=True)
 st.dataframe(df_image)
-
-# barrier
-time.sleep(86400)
