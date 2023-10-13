@@ -3,7 +3,7 @@
 + Open terminal then install the following package
     + pip
         ```bash
-        pip install streamlit pandas numpy opencv-python pyyaml extra-streamlit-components
+        pip install streamlit pandas numpy opencv-python pyyaml extra-streamlit-components unidecode
         ```
 + Download the code to a folder
     + method 1
