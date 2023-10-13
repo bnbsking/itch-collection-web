@@ -1,12 +1,34 @@
 from streamlit.components.v1 import html
-import json
 import extra_streamlit_components as stx
+import json, random, time
 
-def get_session_ajs():
+id_chars = "".join(map(str,range(10))) + "".join( chr(ord('a')+i) for i in range(26) )
+
+def isLogin(cookie_manager):
+    session_id = cookie_manager.get("session_id")
     session = json.load(open("session.json","r"))
-    cookie_manager = stx.CookieManager()
-    ajs = cookie_manager.get("ajs_anonymous_id")
-    return session, ajs
+    return session_id in session
+
+def login(cookie_manager, hospital):
+    session_id = "".join( random.choice(id_chars) for _ in range(32) )
+    cookie_manager.set("session_id", session_id)
+    time.sleep(0.5)
+    session = json.load(open("session.json","r"))
+    session[session_id] = hospital
+    json.dump(session, open("session.json", "w"))
+
+def logout(cookie_manager):
+    session_id = cookie_manager.get("session_id")
+    cookie_manager.delete("session_id")
+    time.sleep(0.5)
+    session = json.load(open("session.json","r"))
+    session.pop(session_id)
+    json.dump(session, open("session.json", "w"))
+
+def getHospital(cookie_manager):
+    session_id = cookie_manager.get("session_id")
+    session = json.load(open("session.json","r"))
+    return session[session_id]
 
 diseaseD = {
     "Atopic-Dermatitis": "過敏性皮膚炎",

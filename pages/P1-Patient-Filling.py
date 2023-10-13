@@ -3,15 +3,19 @@ import pandas as pd
 import streamlit as st
 import yaml
 import utils
+import extra_streamlit_components as stx
 
 print("-"*25+"P1"+"-"*25)
 
 # meta
-session, ajs = utils.get_session_ajs()
-if ajs not in session:
+try:
+    cookie_manager = stx.CookieManager()
+except:
+    utils.nav_page("P1-Patient-Filling")
+if not utils.isLogin(cookie_manager):
     utils.nav_page("P0-Login")
     sys.exit()
-hospital = session[ajs]
+hospital = utils.getHospital(cookie_manager)
 cfg = yaml.safe_load(open('config.yaml', 'r'))
 data_path = f"{cfg['data_path']}/data/{hospital}"
 cdm = pd.read_csv("./pages/cdm.csv").set_index('Unnamed: 0')

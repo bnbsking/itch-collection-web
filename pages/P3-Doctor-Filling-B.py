@@ -3,22 +3,26 @@ import glob, json, os, sys
 import pandas as pd
 import yaml
 import utils
+import extra_streamlit_components as stx
 
-print("-"*25+"collect 2"+"-"*25)
+print("-"*25+"P3"+"-"*25)
 
 # meta
-session, ajs = utils.get_session_ajs()
-if ajs not in session:
+try:
+    cookie_manager = stx.CookieManager()
+except:
+    utils.nav_page("P3-Doctor-Filling-B")
+if not utils.isLogin(cookie_manager):
     utils.nav_page("P0-Login")
     sys.exit()
-hospital = session[ajs]
+hospital = utils.getHospital(cookie_manager)
 cfg = yaml.safe_load(open('config.yaml', 'r'))
 data_path = f"{cfg['data_path']}/data/{hospital}"
 cdm = pd.read_csv("./pages/cdm.csv").set_index('Unnamed: 0') # (5,56)
 
 # title
 title = f"<h1 style='text-align: center'> {hospital} - 癢症資料收集系統 </h1>"
-subtitle = "<h3 style='text-align: center'> (醫師填寫) </h3>"
+subtitle = "<h3 style='text-align: center'> (醫師填寫 - B) </h3>"
 st.markdown(title, unsafe_allow_html=True)
 st.markdown(subtitle, unsafe_allow_html=True)
 
@@ -119,4 +123,4 @@ if export:
     print(patientD_path)
     os.remove(patientD_path)
     utils.alert("Export successfully")
-    utils.nav_page("P4-Table")
+    utils.nav_page("P3-Doctor-Filling-B")

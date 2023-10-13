@@ -8,7 +8,7 @@
 + Download the code to a folder
     + method 1
         ```bash
-        git clone https://gitlab.corp.ailabs.tw/james.chao/itch-collection-web.git
+        git clone https://github.com/bnbsking/itch-collection-web.git
         ```
     + method 2
         + Download by zip (Remember to check the correctness of Chinese format after extracting)
