@@ -6,6 +6,7 @@ import pandas as pd
 import yaml
 import utils
 import extra_streamlit_components as stx
+from unidecode import unidecode
 
 print("-"*25+"P2"+"-"*25)
 
@@ -53,7 +54,8 @@ with st.form("my-form", clear_on_submit=True):
             try:
                 img = np.frombuffer(bt_str, dtype=np.uint8)
                 img = cv2.imdecode(img, cv2.IMREAD_COLOR)
-                cv2.imwrite(f"{data_path}/.tmp/{file.name.split('.')[0]}.jpg", img)
+                filepath = unidecode(f"{data_path}/.tmp/{file.name.split('.')[0]}.jpg").replace(' ','')
+                cv2.imwrite(filepath, img)
             except:
                 print(f"Not image file: {file.name}")
 
