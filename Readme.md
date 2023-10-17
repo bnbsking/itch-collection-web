@@ -70,7 +70,7 @@ It will show the IP address of the web server. To connect to the server by anoth
 + Must turn off the auto-sleep
 
 
-### Reset default or Update the latest released version
+### Reset default or Update the latest released version (Should connect to internet)
 + Linux / MacOS
     ```bash
     ./update.sh
