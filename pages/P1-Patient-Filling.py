@@ -73,7 +73,7 @@ for col, addition in zip(historyL, historyAdditionL):
         with col2:
             D[col] = st.text_input("請說明", max_chars=100, key=col)
     else:
-        D[col] = False
+        D[col] = ans
 st.divider()
 
 assert len(D.keys() - set(cdm.columns)) == 0
