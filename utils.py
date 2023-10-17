@@ -1,5 +1,4 @@
 from streamlit.components.v1 import html
-import extra_streamlit_components as stx
 import json, random, time
 
 id_chars = "".join(map(str,range(10))) + "".join( chr(ord('a')+i) for i in range(26) )

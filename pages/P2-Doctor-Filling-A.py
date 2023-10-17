@@ -49,13 +49,17 @@ with st.form("my-form", clear_on_submit=True):
     fileL = st.file_uploader("File uploader", accept_multiple_files=True)
     submitted = st.form_submit_button("Upload")
     if submitted:
+        repeatS = { filename.split('.')[0] for filename in os.listdir(f"{data_path}/.tmp") } # filePrefix[str]
         for file in fileL:
             bt_str = file.getvalue()
             try:
                 img = np.frombuffer(bt_str, dtype=np.uint8)
                 img = cv2.imdecode(img, cv2.IMREAD_COLOR)
-                filepath = unidecode(f"{data_path}/.tmp/{file.name.split('.')[0]}.jpg").replace(' ','')
-                cv2.imwrite(filepath, img)
+                filePrefix = unidecode(file.name.split('.')[0]).replace(' ','') + "1"
+                while filePrefix in repeatS:
+                    filePrefix = filePrefix[:-1] + str(int(filePrefix[-1])+1)
+                repeatS.add(filePrefix)
+                cv2.imwrite(f"{data_path}/.tmp/{filePrefix}.jpg", img)
             except:
                 print(f"Not image file: {file.name}")
 

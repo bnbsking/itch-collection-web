@@ -1,30 +1,27 @@
 ### Installation
 + Python 3+: [Miniconda3](https://docs.conda.io/projects/miniconda/en/latest/)
-+ Open terminal then install the following package
-    + pip
++ Python packages:
+    + Open terminal then install the following packages
         ```bash
         pip install streamlit pandas numpy opencv-python pyyaml extra-streamlit-components unidecode
         ```
-+ Download the code to a folder
-    + method 1
-        ```bash
-        git clone https://github.com/bnbsking/itch-collection-web.git
-        ```
-    + method 2
-        + Download by zip (Remember to check the correctness of Chinese format after extracting)
-
++ Git:
+    + Git is a version control tool for installation and auto-updating.
+    + Linux or MacOS has installed in default. For windows user, Download [here](https://git-scm.com/download/win)
+    ```bash
+    git clone https://github.com/bnbsking/itch-collection-web.git
+    ```
 
 ### Quick start
-+ method 1: script (Linux/MacOS only)
++ Linux / MacOS
     ```bash
     ./start.sh
     ```
-+ method 2: commands
++ Windows
     ```bash
-    ipconfig # "ipconfig" is for windows, "ifconfig" is for Linux/MacOS
-    streamlit run main.py  --server.address 0.0.0.0
+    ./start.bat
     ```
-It will show the ip address of the web server. To connect to the server by another device, type the "ip:8501" on the web address bar then enter it.
+It will show the IP address of the web server. To connect to the server by another device, type the "IP:8501" on the web address bar then enter it.
 
 
 ### File structure

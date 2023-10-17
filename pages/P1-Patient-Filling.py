@@ -30,11 +30,12 @@ st.markdown(subtitle, unsafe_allow_html=True)
 D = {}
 
 # 1 Basic -> 8 features
+minDate = datetime.datetime(1900,1,1)
 today = datetime.datetime.now().date()
-D["STUDY_DATE"] = st.date_input(cdm["STUDY_DATE"]["Chinese"], max_value=today, format="YYYY/MM/DD", value=today, disabled=True)
-D["INDEX_DATE"] = st.date_input(cdm["INDEX_DATE"]["Chinese"], max_value=today, format="YYYY/MM/DD")
+D["STUDY_DATE"] = st.date_input(cdm["STUDY_DATE"]["Chinese"], format="YYYY/MM/DD", value=today, disabled=True)
+D["INDEX_DATE"] = st.date_input(cdm["INDEX_DATE"]["Chinese"], min_value=minDate, max_value=today, format="YYYY/MM/DD")
 D["GENDER"] = st.radio(cdm["GENDER"]["Chinese"], cdm["GENDER"]["Format"].split('/'), horizontal=True)
-D["DATE_OF_BIRTH"] = st.date_input(cdm["DATE_OF_BIRTH"]["Chinese"], max_value=today, format="YYYY/MM/DD")
+D["DATE_OF_BIRTH"] = st.date_input(cdm["DATE_OF_BIRTH"]["Chinese"], min_value=minDate, max_value=today, format="YYYY/MM/DD")
 D["BH"] = st.number_input(cdm["BH"]["Chinese"]+" (cm)", min_value=0.0, max_value=300.0, step=0.1, value=0.0, format="%f")
 D["BW"] = st.number_input(cdm["BW"]["Chinese"]+" (kg)", min_value=0.0, max_value=300.0, step=0.1, value=0.0, format="%f")
 D["BMI"] = st.number_input(cdm["BMI"]["Chinese"], min_value=0.0, step=0.1, 
@@ -57,25 +58,36 @@ score = scoreL.count("非常嚴重")*3 + scoreL.count("嚴重")*2 + scoreL.count
 D["DLQI"] = st.number_input("DLQI", min_value=0, max_value=30, step=1, value=score, disabled=True)
 st.divider()
 
-# 4 History -> 4 features
-historyL = ["CHRONIC_SYSTEMIC_DISEASE", "MEDICATION_USE_STATUS", "DRUG_ALLERGY_HISTORY", "ALLERGY_HISTORY_EXCEPT_DRUG"]
-historyAdditionL = ["有高血壓/高血糖/高血脂", "服用西藥/中藥/保健食品", "任何藥物", "如塵蟎,食物,..."]
+# 4 History -> 6 features
+chronicL = ["高血壓", "高血糖", "高血脂"]
+selectL = st.multiselect("有 高血壓 or 高血糖 or 高血脂", chronicL)
+for col in chronicL:
+    D[col] = col in selectL
+#
+historyL = ["MEDICATION_USE_STATUS", "DRUG_ALLERGY_HISTORY", "ALLERGY_HISTORY_EXCEPT_DRUG"]
+historyAdditionL = ["服用西藥/中藥/保健食品", "任何藥物", "如塵蟎,食物,..."]
 for col, addition in zip(historyL, historyAdditionL):
-    D[col] = st.selectbox(f"{cdm[col]['Chinese']} ({addition})", options=["","是","否"])
+    ans = st.selectbox(f"{cdm[col]['Chinese']} ({addition})", options=["","是","否"])
+    if ans=="是":
+        col1, col2 = st.columns(2)
+        with col2:
+            D[col] = st.text_input("請說明", max_chars=100, key=col)
+    else:
+        D[col] = False
 st.divider()
 
-assert len(D.keys() - set(cdm.columns)) == 0 # 18
-assert len(D)==((cdm.loc["Page"]=="1").sum()) # 18
+assert len(D.keys() - set(cdm.columns)) == 0
+assert len(D)==((cdm.loc["Page"]=="1").sum()) # 20
 
 if st.button("submit"):
-    bool_cols = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="bool") ]) # 1 smoke + 4 history
+    bool_cols = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="bool") ]) # 1 smoke + 3 chronic
     date_cols = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="date") ]) # 3 study,index,birth
-    str_cols  = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="str") ])  # 4 env
+    str_cols  = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="str") ])  # 4 env + 3 history
 
     # empty check
     emptyL = []
     for col in ["BH", "BW"] + bool_cols + str_cols:
-        if not bool(D[col]):
+        if D[col]=="":
             emptyL.append(cdm[col]["Chinese"])
     if emptyL:
         error_msg = ", ".join(emptyL) + " 不可為空"
