@@ -3,7 +3,7 @@
 + Python packages:
     + Open terminal then install the following packages
         ```bash
-        pip install streamlit pandas numpy opencv-python pyyaml extra-streamlit-components unidecode
+        pip install -r requirements.txt
         ```
 + Git:
     + Git is a version control tool for installation and auto-updating.
@@ -11,6 +11,7 @@
     ```bash
     git clone https://github.com/bnbsking/itch-collection-web.git
     ```
+
 
 ### Quick start
 + Linux / MacOS
@@ -59,6 +60,17 @@ It will show the IP address of the web server. To connect to the server by anoth
 ### Deploy notes
 + config.yaml
     + autofill must be false
+
+
+### Update the latest
++ Linux / MacOS
+    ```bash
+    update.sh
+    ```
++ Windows
+    ```bash
+    update.bat
+    ```
 
 
 ### Pages
