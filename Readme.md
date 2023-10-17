@@ -1,11 +1,13 @@
 ### Installation
-+ Python 3+: [Miniconda3](https://docs.conda.io/projects/miniconda/en/latest/)
 + Git:
     + Git is a version control tool for installation and auto-updating.
-    + Linux or MacOS has installed in default. For windows user, Download [here](https://git-scm.com/download/win)
+        + Linux or MacOS: has been installed in default
+        + Windows: download [here](https://git-scm.com/download/win)
+    + Open terminal in Desktop
     ```bash
     git clone https://github.com/bnbsking/itch-collection-web.git
     ```
++ Python 3+: [Miniconda3](https://docs.conda.io/projects/miniconda/en/latest/)
 + Python packages:
     + Open terminal in the cloned folder
         ```bash
