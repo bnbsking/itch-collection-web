@@ -1,8 +1,8 @@
 ### Installation
-+ Git:
-    + Git is a version control tool for installation and auto-updating.
-        + Linux or MacOS: has been installed in default
-        + Windows: download [here](https://git-scm.com/download/win)
++ Git (a version control tool for installation and auto-updating)
+    + Linux or MacOS: has been installed in default
+    + Windows: download [here](https://git-scm.com/download/win)
++ Download this repo
     + Open terminal in Desktop
     ```bash
     git clone https://github.com/bnbsking/itch-collection-web.git
