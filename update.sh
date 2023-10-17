@@ -1,5 +1,5 @@
 #!/bin/bash
-git reset --hard HEAD~1
-git pull -s recursive -X theirs
+git reset --hard origin/your-branch
+git pull
 pip install -r requirements.txt
 echo "update complete"
