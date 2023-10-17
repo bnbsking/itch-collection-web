@@ -57,14 +57,18 @@ It will show the IP address of the web server. To connect to the server by anoth
 + show/*.png | pages
 + config.yaml | configuration include login information
 + session.json | store login permission and data of clients for the web server
++ requirements.txt | python packages need to be installed
++ version_* | denote the current version
 
 
 ### Deploy notes
 + config.yaml
     + autofill must be false
++ Must turn off the firewall
++ Must turn off the auto-sleep
 
 
-### Update the latest
+### Reset default or Update the latest released version 
 + Linux / MacOS
     ```bash
     ./update.sh
