@@ -1,16 +1,16 @@
 ### Installation
 + Python 3+: [Miniconda3](https://docs.conda.io/projects/miniconda/en/latest/)
-+ Python packages:
-    + Open terminal then install the following packages
-        ```bash
-        pip install -r requirements.txt
-        ```
 + Git:
     + Git is a version control tool for installation and auto-updating.
     + Linux or MacOS has installed in default. For windows user, Download [here](https://git-scm.com/download/win)
     ```bash
     git clone https://github.com/bnbsking/itch-collection-web.git
     ```
++ Python packages:
+    + Open terminal in the cloned folder
+        ```bash
+        pip install -r requirements.txt
+        ```
 
 
 ### Quick start
@@ -20,7 +20,7 @@
     ```
 + Windows
     ```bash
-    ./start.bat
+    start.bat
     ```
 It will show the IP address of the web server. To connect to the server by another device, type the "IP:8501" on the web address bar then enter it.
 
@@ -65,7 +65,7 @@ It will show the IP address of the web server. To connect to the server by anoth
 ### Update the latest
 + Linux / MacOS
     ```bash
-    update.sh
+    ./update.sh
     ```
 + Windows
     ```bash
