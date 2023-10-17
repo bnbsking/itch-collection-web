@@ -2,4 +2,4 @@ data_path: ./
 hospitals: ["VGHKS", "EDA", "KCGMH", "KMU"]
 account: admin
 password: hello
-autofill: true
+autofill: false

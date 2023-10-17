@@ -28,17 +28,8 @@ It will show the IP address of the web server. To connect to the server by anoth
 
 
 ### File structure
-+ start.sh | start the web server
-+ main.py | auto nevigate to P0-Login.py
-+ utils.py | some functions
-+ pages/
-    + P0-Login.py | Select hospital and login / logout
-    + P1-Patient-Filling.py
-    + P2-Doctor-Filling-A.py | Collect images 
-    + P3-Doctor-Filling-B.py | Collect reset columns
-    + P4-Table.py | Editable tabular data for all patients and Non-editable images stats
-    + cdm.csv | common data model of each columns
-+ data/
++ .streamlit/config.toml | global config of the web UI
++ data/ | auto-generated after login
     + VGHKS/ or EDA/ or KCGMH/ or  KMU/ | hospital name
         + .tmp/ | Uploaded images. Can be previewed and deleted by web
             + patient_data.json | Generated after P1. Note that submit at P1 again will **replace** this file. Be deleted after P2
@@ -54,10 +45,21 @@ It will show the IP address of the web server. To connect to the server by anoth
             + Urticaria/*.jpg
         + export_tab/
             + data.csv | Exported Tabular data. Can be edited in P4
++ pages/
+    + P0-Login.py | Select hospital and login / logout
+    + P1-Patient-Filling.py
+    + P2-Doctor-Filling-A.py | Collect images 
+    + P3-Doctor-Filling-B.py | Collect reset columns
+    + P4-Table.py | Editable tabular data for all patients and Non-editable images stats
+    + cdm.csv | common data model of each columns
 + show/*.png | pages
 + config.yaml | configuration include login information
-+ session.json | store login permission and data of clients for the web server
++ main.py | auto nevigate to P0-Login.py
 + requirements.txt | python packages need to be installed
++ session.json | store login permission and data of clients for the web server
++ start.sh or start.bat | start the web server
++ update.sh or update.bat | restore default & update the latest version
++ utils.py | some functions
 + version_* | denote the current version
 
 
