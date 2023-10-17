@@ -64,8 +64,8 @@ It will show the IP address of the web server. To connect to the server by anoth
 
 
 ### Deploy notes
-+ config.yaml
-    + autofill must be false
++ Account and Password can be changed in Config.yaml
++ Disconnect WIFI to others, then open hotspot for the phone
 + Must turn off the firewall
 + Must turn off the auto-sleep
 
