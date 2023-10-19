@@ -33,7 +33,7 @@ def getHospital(cookie_manager):
 diseaseD = {
     "Atopic-Dermatitis": "過敏性皮膚炎",
     "Contact-Dermatitis": "接觸性皮膚炎",
-    "Fixed-drug-eruption": "固定性藥物疹",
+    "Drug-eruption": "固定性藥物疹",
     "Fungal-disease": "真菌感染疾病",
     "Psoriasis": "乾癬",
     "Urticaria": "蕁麻疹",

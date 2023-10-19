@@ -38,11 +38,11 @@ disease_id = st.radio("Disease", [d.replace('-',' ') for d in utils.diseaseD.key
 disease_id = disease_id.replace(' ', '-')
 if not patient_id or not patient_time:
     sys.exit()
-else: # patient data # 1 Basic -> 3 features
-    D = patientD
-    D.pop("now")
-    D["HOSPITAL"], D["PATIENT_ID"], D["DISEASE"] = hospital, patient_id, disease_id
-    st.divider()
+# 1 Basic -> 3 features
+D = patientD # patient data 
+D.pop("now")
+D["HOSPITAL"], D["PATIENT_ID"], D["DISEASE"] = hospital, patient_id, disease_id
+st.divider()
 
 # image - file uploader
 with st.form("my-form", clear_on_submit=True):
@@ -79,21 +79,22 @@ st.divider()
 
 # 2 lesion distribution -> 8 features
 lesionL = ["UPPER_LIMBS", "LOWER_LIMBS", "TRUNK", "HEAD_AND_NECK", "INGUINAL_AREA", "AXILLA", "UMBILICUS", "FINGERWEB"]
-selectL = st.multiselect("病灶分佈", [cdm[col]["Chinese"].replace("病灶分佈-","") for col in lesionL])
+selectL = st.multiselect("病灶分佈", [cdm.at["Chinese",col].replace("病灶分佈-","") for col in lesionL])
 for col in lesionL:
-    D[col] = cdm[col]["Chinese"].replace("病灶分佈-","") in selectL
+    D[col] = cdm.at["Chinese",col].replace("病灶分佈-","") in selectL
 
 # 3 lesion presentation -> 4 features
-presentL = ["CUTANEOUS_FINDING_紅疹", "CUTANEOUS_FINDING_丘疹", "CUTANEOUS_FINDING_水泡", "MUCOSA_INVOLVEMEN"]
-selectL = st.multiselect("病灶表現", presentL)
+presentL = ["CUTANEOUS_FINDING_MACULES_AND_PATCHES", "CUTANEOUS_FINDING_PAPULES_AND_NODULES", 
+            "CUTANEOUS_FINDING_VESICLES_AND_BLISTERS", "MUCOSA_INVOLVEMEN"]
+selectL = st.multiselect("病灶表現", [cdm.at["Chinese",col].replace("病灶表現-","") for col in presentL])
 for col in presentL:
-    D[col] = col in selectL
+    D[col] = cdm.at["Chinese",col].replace("病灶表現-","") in selectL
 st.divider()
 
 assert len(D.keys() - set(cdm.columns)) == 0
-assert len(D)==( (cdm.loc["Page"]=="1") | (cdm.loc["Page"]=="2") ).sum() # 18+15=33
+assert len(D)==( (cdm.loc["Page"]=="1") | (cdm.loc["Page"]=="2") ).sum() # 22+15=37
 
-# export 
+# export
 if st.button("Export"):
     today = datetime.datetime.now().strftime("%Y%m%d")
     filePrefix = f"{hospital}_{today}_{patient_id}_{disease_id}"
@@ -118,5 +119,4 @@ if st.button("Export"):
     
     # reset
     utils.alert("Export successfully")
-    #utils.nav_page("P3-Doctor-Filling-B")
     utils.nav_page("P1-Patient-Filling")
