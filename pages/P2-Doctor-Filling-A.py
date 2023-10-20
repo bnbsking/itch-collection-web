@@ -85,10 +85,11 @@ for col in lesionL:
 
 # 3 lesion presentation -> 4 features
 presentL = ["CUTANEOUS_FINDING_MACULES_AND_PATCHES", "CUTANEOUS_FINDING_PAPULES_AND_NODULES", 
-            "CUTANEOUS_FINDING_VESICLES_AND_BLISTERS", "MUCOSA_INVOLVEMEN"]
+            "CUTANEOUS_FINDING_VESICLES_AND_BLISTERS"]
 selectL = st.multiselect("病灶表現", [cdm.at["Chinese",col].replace("病灶表現-","") for col in presentL])
 for col in presentL:
     D[col] = cdm.at["Chinese",col].replace("病灶表現-","") in selectL
+D["MUCOSA_INVOLVEMEN"] = st.selectbox(cdm.at["Chinese","MUCOSA_INVOLVEMEN"], options=["","是","否"])
 st.divider()
 
 assert len(D.keys() - set(cdm.columns)) == 0
@@ -99,7 +100,14 @@ if st.button("Export"):
     today = datetime.datetime.now().strftime("%Y%m%d")
     filePrefix = f"{hospital}_{today}_{patient_id}_{disease_id}"
 
-    # image
+    # tabular check
+    if not D["MUCOSA_INVOLVEMEN"]: # empty check
+        st.write(":red[黏膜病灶 cannot be null]")
+        sys.exit()
+    else:
+        D["MUCOSA_INVOLVEMEN"] = D["MUCOSA_INVOLVEMEN"]=="是"
+
+    # image export
     if not any( getattr(st.session_state, f"select_{i}") for i in range(len(glob.glob(f"{data_path}/.tmp/*.jpg"))) ):
         st.write(":red[Image cannot be null]")
         sys.exit()
@@ -112,7 +120,7 @@ if st.button("Export"):
         else:
             os.remove(path)
     
-    # tabular
+    # tabular export
     with open(f"{os.path.dirname(patientD_path)}/{filePrefix}.json", "w") as f:
         json.dump(D, f)
     os.remove(patientD_path)
