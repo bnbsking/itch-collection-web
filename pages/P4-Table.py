@@ -30,7 +30,8 @@ st.markdown(subtitle, unsafe_allow_html=True)
 if "login" not in st.session_state: # only F5-refresh can wipe out st.session_state 
     account_in, password_in, submit_btn, login = st.empty(), st.empty(), st.empty(), False
     account = account_in.text_input("Account", max_chars=100, value=cfg["account"] if cfg["autofill"] else "")
-    password = password_in.text_input("Passward", max_chars=100, value=cfg["password"] if cfg["autofill"] else "", type="password")
+    password = password_in.text_input("Passward", max_chars=100, 
+                                      value=cfg["password"] if cfg["autofill"] else "", type="password")
     submit = submit_btn.button("Login")
     if submit:
         if account==cfg["account"] and password==cfg["password"]:
@@ -101,7 +102,9 @@ st.divider()
 st.subheader("Image data")
 imageD = {}
 for disease in utils.diseaseD:
-    imageD[disease] = [ utils.diseaseD[disease], len(glob.glob(f"{data_path}/export_img/{disease}/*.jpg")) ]
+    imageD[disease] = [ utils.diseaseD[disease], 
+                        len(glob.glob(f"{data_path}/export_img/{disease}/*.jpg")),
+                        (df["DISEASE"]==disease).sum() ]
 df_image = pd.DataFrame(imageD)
-df_image.rename(index={0:"Chinese", 1:"Counts"}, inplace=True)
+df_image.rename(index={0:"Chinese", 1:"Images", 2:"Patients"}, inplace=True)
 st.dataframe(df_image)

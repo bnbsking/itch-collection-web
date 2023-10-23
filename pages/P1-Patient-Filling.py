@@ -68,7 +68,8 @@ st.divider()
 
 # 4 History -> 3+3 features
 chronicL = ["HYPERTENSION", "HYPERGLYCAEMIA", "HYPERLIPIDEMIA"]
-selectL = st.multiselect("有 高血壓 or 高血糖 or 高血脂", [ cdm.at["Chinese",col] for col in chronicL ])
+selectL = st.multiselect("高血壓 or 高血糖 or 高血脂 --- (若無, 則免填)", 
+                         [ cdm.at["Chinese",col] for col in chronicL ])
 for col in chronicL:
     D[col] = cdm.at["Chinese",col] in selectL
 st.write("#") # linebreak
@@ -104,7 +105,7 @@ if st.button("submit"):
 
     # type conversion + save
     for col in bool_cols:
-        D[col] = D[col]=="是"
+        D[col] = D[col]=="是" if type(D[col])!=bool else D[col]
     for col in date_cols:
         D[col] = str(D[col]).replace('-','')
     for col in str_cols:

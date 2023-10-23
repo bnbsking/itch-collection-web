@@ -58,14 +58,22 @@ st.divider()
 
 # 3 score and other tests -> 3 features
 for col in ["BSA", 'EASI', 'PASI']:
-    D[col] = st.number_input(col + " | " + cdm.at["Chinese",col], min_value=0.0, max_value=72.0, value=0.0, format="%f")
+    D[col] = st.number_input(col + " | " + cdm.at["Chinese",col], min_value=0.0,
+                             max_value=float(cdm.at["Format",col].split('-')[-1]), value=0.0, format="%f")
 st.divider()
 
 # 4 score and other tests -> 1+2 features
 for col in ["MAST"]:
     D[col] = st.text_input(col + " | " + cdm.at["Chinese",col], max_chars=100)
-for col in ['COMPATIBLE_BIOPSY_REPORT', 'PATCH_TEST']:
+for col in ['COMPATIBLE_BIOPSY_REPORT']: # 'PATCH_TEST'
     D[col] = st.selectbox(col + " | " + cdm.at["Chinese",col], options=["","是","否"])
+ans = st.selectbox(col + " | " + cdm.at["Chinese",'PATCH_TEST'], options=["","是","否"])
+if ans=="是":
+    col1, col2 = st.columns(2)
+    with col2:
+        D['PATCH_TEST'] = st.text_input("請說明", max_chars=100)
+else:
+    D['PATCH_TEST'] = ans
 st.divider()
 
 # 5 Climates -> 5 features
@@ -78,7 +86,7 @@ for col in ['UV_INDEX', 'HUMIDITY']:
 st.markdown( "Reference: [交通部-中央氣象署](https://www.cwa.gov.tw/V8/C/W/Town/Town.html?TID=6400900)" )
 st.divider()
 for col in ['PH']:
-    D[col] = st.slider(col + " | " + cdm.at["Chinese",col], min_value=0.0, max_value=14.0, value=7.0, step=0.01)
+    D[col] = st.number_input(col + " | " + cdm.at["Chinese",col], min_value=0.0, max_value=14.00, value=7.0, step=0.01, format="%f")
 st.markdown( "Reference: [台灣自來水公司-水質即時資訊](https://www.water.gov.tw/wq/)" )
 st.divider()
 
