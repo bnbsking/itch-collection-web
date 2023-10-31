@@ -89,9 +89,9 @@ assert len(D.keys() - set(cdm.columns)) == 0
 assert len(D)==((cdm.loc["Page"]=="1").sum()) # 22
 
 if st.button("submit"):
-    bool_cols = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="bool") ]) # 1 smoke + 3 chronic
-    date_cols = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="date") ]) # 3 study,index,birth
-    str_cols  = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="str") ])  # 4 env + 3 history
+    bool_cols = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="bool") ])
+    date_cols = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="date") ])
+    str_cols  = list(cdm.columns[ (cdm.loc["Page"]=="1") & (cdm.loc["Type"]=="str") ])
 
     # empty check
     emptyL = []

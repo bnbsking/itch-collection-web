@@ -62,7 +62,7 @@ for col in ["BSA", 'EASI', 'PASI']:
                              max_value=float(cdm.at["Format",col].split('-')[-1]), value=0.0, format="%f")
 st.divider()
 
-# 4 score and other tests -> 1+2 features
+# 4 score and other tests -> 1+1+1 features
 for col in ["MAST"]:
     D[col] = st.text_input(col + " | " + cdm.at["Chinese",col], max_chars=100)
 for col in ['COMPATIBLE_BIOPSY_REPORT']: # 'PATCH_TEST'
@@ -76,8 +76,12 @@ else:
     D['PATCH_TEST'] = ans
 st.divider()
 
-# 5 Climates -> 5 features
-for col in ['AQI', 'PM2.5', "PM10", "O3", "SO2", "NO2", "CH4", "CO", "THC"]:
+# 5 Climates -> 15 features
+for col in ['PH']:
+    D[col] = st.number_input(col + " | " + cdm.at["Chinese",col], min_value=0.0, max_value=14.00, value=7.0, step=0.01, format="%f")
+st.markdown( "Reference: [台灣自來水公司-水質即時資訊](https://www.water.gov.tw/wq/)" )
+st.divider()
+for col in ['AQI', 'PM2.5', "CH4", "NMHC", "THC", "NO2", "NO", "NOx", "PM10", "O3", "CO", "SO2"]:
     D[col] = st.number_input(col + " | " + cdm.at["Chinese",col], min_value=0.0, max_value=1e10, value=0.0, step=0.01, format="%f")
 st.markdown( "Reference: [環境部-空氣品質監測網](https://airtw.moenv.gov.tw/CHT/Query/StationData.aspx)" )
 st.divider()
@@ -85,18 +89,14 @@ for col in ['UV_INDEX', 'HUMIDITY']:
     D[col] = st.number_input(col + " | " + cdm.at["Chinese",col], min_value=0.0, max_value=100.0, value=0.0, step=0.01, format="%f")
 st.markdown( "Reference: [交通部-中央氣象署](https://www.cwa.gov.tw/V8/C/W/Town/Town.html?TID=6400900)" )
 st.divider()
-for col in ['PH']:
-    D[col] = st.number_input(col + " | " + cdm.at["Chinese",col], min_value=0.0, max_value=14.00, value=7.0, step=0.01, format="%f")
-st.markdown( "Reference: [台灣自來水公司-水質即時資訊](https://www.water.gov.tw/wq/)" )
-st.divider()
 
-assert set(D.keys()) == set(cdm.columns), (len(D.keys()), D.keys()) # 37+30=67
+assert set(D.keys()) == set(cdm.columns), (len(D.keys()), D.keys()) # 37+33=70
 
 # export
 export = st.button("Export")
 if export:
-    bool_cols = list(cdm.columns[ (cdm.loc["Page"]=="3") & (cdm.loc["Type"]=="bool") ]) # 1 smoke + 4 history
-    str_cols  = list(cdm.columns[ (cdm.loc["Page"]=="3") & (cdm.loc["Type"]=="str") ])  # 4 env
+    bool_cols = list(cdm.columns[ (cdm.loc["Page"]=="3") & (cdm.loc["Type"]=="bool") ])
+    str_cols  = list(cdm.columns[ (cdm.loc["Page"]=="3") & (cdm.loc["Type"]=="str") ])
 
     # empty check
     emptyL = []
@@ -115,7 +115,7 @@ if export:
         D[col] = D[col].strip()
         D[col] = "_"*int(not D[col] or D[col][0].isnumeric() or D[col][0]==".") + D[col]
 
-    # tabular ＃ overall 67 columns
+    # tabular ＃ overall 70 columns
     pre_data_path = f"{data_path}/export_tab/data.csv"
     if glob.glob(pre_data_path):
         df = pd.read_csv(pre_data_path)

@@ -18,7 +18,7 @@ if not utils.isLogin(cookie_manager):
 hospital = utils.getHospital(cookie_manager)
 cfg = yaml.safe_load(open('config.yaml', 'r'))
 data_path = f"{cfg['data_path']}/data/{hospital}"
-cdm = pd.read_csv("./pages/cdm.csv").set_index('Unnamed: 0') # (5,56)
+cdm = pd.read_csv("./pages/cdm.csv").set_index('Unnamed: 0') # (5,70)
 
 # title
 title = f"<h1 style='text-align: center'> {hospital} - 癢症資料收集系統 </h1>"

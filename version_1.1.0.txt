@@ -2,3 +2,4 @@ v1.0.0 - 2023.10.17 - Complete repo; fix cdm; fix image name bugs and year bugs;
 v1.0.1 - 2023.10.19 - Improve Chinese name query; fix cdm; fix disease name; float step fixed. 67 columns.
 v1.0.2 - 2023.10.20 - Fix 黏膜病灶. REMEMBER To delete ./data manually first time update.
 v1.0.3 - 2023.10.23 - Fix HYPERTENSION,HYPERLIPIDEMIA,HYPERGLYCAEMIA; BSA range; PH value not bar; Patch test be string; patients cases overview
+v1.1.0 - 2023.10.31 - Add 3 columns in CDM. 70 columns. REMEMBER To delete ./data manually first time since the new cdm is conflict with the previous.
