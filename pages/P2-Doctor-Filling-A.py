@@ -114,8 +114,9 @@ if st.button("Export"):
     for i,path in enumerate(glob.glob(f"{data_path}/.tmp/*.jpg")):
         check = getattr(st.session_state, f"select_{i}")
         if check:
-            maxExpPath = max(glob.glob(f"{os.path.dirname(path)}/../export_img/*/{filePrefix}_*")+[''])
-            maxExpId = int(re.findall(f"_([0-9]+)\.jpg",maxExpPath)[0]) if maxExpPath else -1
+            fileList = glob.glob(f"{os.path.dirname(path)}/../export_img/*/{filePrefix}_*")
+            fileNumber = re.findall(r"_([0-9]+)\.jpg",''.join(fileList))+[-1]
+            maxExpId = max([int(x) for x in fileNumber])
             shutil.move(path, f"{os.path.dirname(path)}/../export_img/{disease_id}/{filePrefix}_{maxExpId+1}.jpg")
         else:
             os.remove(path)
